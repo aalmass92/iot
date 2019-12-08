@@ -1,0 +1,164 @@
+#!/usr/bin/python
+
+from Adafruit_LEDBackpack import LEDBackpack
+from Adafruit_8x8 import EightByEight
+import time
+import datetime
+
+grid = EightByEight(address=0x70)
+
+#smile_bmp = [0b00011110,0b00100001,0b11010010,0b11000000,0b11010010,0b11001100,0b00100001,0b00011110]
+#neutral_bmp = [0b00011110,0b00100001,0b11010010,0b11000000,0b11011110,0b11000000,0b00100001,0b00011110]
+#frown_bmp = [0b00011110,0b00100001,0b11010010,0b11000000,0b11001100,0b11010010,0b00100001,0b00011110]
+
+smile_bmp = [ 0b00111100,0b01000010,0b10100101,0b10000001,0b10100101,0b10011001,0b01000010,0b00111100]
+frown_bmp = [ 0b00111100,0b01000010,0b10100101,0b10000001,0b10011001,0b10100101,0b01000010,0b00111100]
+scream_bmp = [ 0b00111100,0b01000010,0b10100101,0b10000001,0b10011001,0b10111101,0b01000010,0b00111100]
+neutral_bmp = [ 0b00111100,0b01000010,0b10100101,0b10000001,0b10111101,0b10000001,0b01000010,0b00111100]
+grin_bmp = [0b00111100,0b01000010,0b10100101,0b10000001,0b10111101,0b10111101,0b01000010,0b00111100]
+wide_grin_bmp = [ 0b00000000,0b01100110,0b01100110,0b00000000,0b10000001,0b01000010,0b00111100,0b00000000]
+wide_sad_bmp =[ 0b00000000,0b01100110,0b01100110,0b00000000,0b00111100,0b01000010,0b10000001,0b00000000]
+wide_neutral_bmp = [ 0b00000000,0b01100110,0b01100110,0b00000000,0b00000000,0b01111110,0b00000000,0b00000000]
+pacman_bmp = [  0b00111100,0b01111110,0b11011111,0b11111111,0b11110000,0b11111111,0b01111110,0b00111100]
+pacman_2_bmp = [ 0b00111100,0b01011110,0b11011110,0b11111100,0b11111000,0b11111100,0b01111110,0b00111100]
+pacman_ghost1_bmp =[ 0b00111000,0b01111100,0b10010010,0b10010010,0b11111110,0b11111110,0b11111110,0b10101010]
+pacman_ghost2_bmp = [0b00111100,0b01010110,0b10010011,0b11011011,0b11111111,0b11111111,0b11101110,0b01000100]
+pacman_ghost3_bmp =  [0b00111100,0b01010110,0b10010011,0b11011011,0b11111111,0b11111111,0b11011101,0b10001001]
+pacman_ghost4_bmp = [0b00111100,0b01010110,0b10010011,0b11011011,0b11111111,0b11111111,0b11101110,0b01000100]
+pacman_ghost5_bmp = [0b00111100,0b01010110,0b10010011,0b11011011,0b11111111,0b11111111,0b11011101,0b10001001]
+pacman_ghost6_bmp =[ 0b00111100,0b01101010,0b11001001,0b11011011,0b11111111,0b11111111,0b11011101,0b10011001]
+pacman_ghost7_bmp = [0b00111100,0b01101010,0b11001001,0b11011011,0b11111111,0b11111111,0b10111011,0b10010001]
+monster_face_bmp = [0b00011000,0b00111100,0b01111110,0b11011011,0b11111111,0b00100100,0b01011010,0b01000010]
+forward_arrow_bmp = [0b00000000,0b00001000,0b00000100,0b01111110,0b00000100,0b00001000,0b00000000,0b00000000]
+down_arrow_bmp = [0b00000000,0b00010000,0b00010000,0b00010000,0b01010100,0b00111000,0b00010000,0b00000000]
+back_arrow_bmp = [0b00000000,0b00010000,0b00100000,0b01111110,0b00100000,0b00010000,0b00000000,0b00000000]
+up_arrow_bmp = [0b00000000,0b00010000,0b00111000,0b01010100,0b00010000,0b00010000,0b00010000,0b00000000]
+#he_bmp = [0b00000000,0b10101110,0b10101000,0b10101000,0b11101110,0b10101000,0b10101110,0b00000000]
+#ll_bmp = [0b00000000,0b10001000,0b10001000,0b10001000,0b10001000,0b10001000,0b11101110,0b00000000]
+#o_pattern_bmp = [0b00000000,0b11100100,0b10101110,0b10101010,0b10100000,0b10101100,0b11100110,0b00001100]
+spin_pattern_1_bmp = [0b00000000,0b01100100,0b11001110,0b01101010,0b00000000,0b10101100,0b11100110,0b01001100]
+spin_pattern_2_bmp = [0b00000000,0b01001100,0b11100110,0b10101100,0b00000000,0b01101010,0b11001110,0b01100100]
+spin_pattern_3_bmp = [0b00000000,0b11001010,0b01101110,0b11000100,0b00000000,0b01000110,0b11101100,0b10100110]
+spin_pattern_4_bmp = [0b00000000,0b10100110,0b11101100,0b01000110,0b00000000,0b11000100,0b01101110,0b11001010]
+
+while True :
+    
+	# Write a smiley face
+    	for i in range(0,8):
+            grid.writeRowRaw(i, smile_bmp[i])
+    	time.sleep(.33)
+     
+      	# Write a neutral face
+    	for i in range(0,8):
+       	    grid.writeRowRaw(i, frown_bmp[i])
+    	time.sleep(.33)
+       
+      # Write a frown face
+    	for i in range(0,8):
+            grid.writeRowRaw(i, scream_bmp[i])
+    	time.sleep(.33)
+
+ 	for i in range(0,8):
+            grid.writeRowRaw(i, neutral_bmp[i])
+    	time.sleep(.33)
+
+     	for i in range(0,8):
+            grid.writeRowRaw(i, grin_bmp[i])
+    	time.sleep(.33)
+
+     	for i in range(0,8):
+       	    grid.writeRowRaw(i, wide_grin_bmp[i])
+    	time.sleep(.33)
+
+     	for i in range(0,8):
+       	    grid.writeRowRaw(i, wide_sad_bmp[i])
+    	time.sleep(.33)
+
+     	for i in range(0,8):
+       	    grid.writeRowRaw(i, wide_neutral_bmp[i])
+    	time.sleep(.33)
+
+     	for i in range(0,8):
+            grid.writeRowRaw(i, pacman_bmp[i])
+    	time.sleep(.33)
+
+     	for i in range(0,8):
+            grid.writeRowRaw(i, pacman_2_bmp[i])
+    	time.sleep(.33)
+
+     	for i in range(0,8):
+            grid.writeRowRaw(i, pacman_ghost1_bmp[i])
+    	time.sleep(.33)
+
+    	for i in range(0,8):
+            grid.writeRowRaw(i, pacman_ghost2_bmp[i])
+    	time.sleep(.33)
+
+    	for i in range(0,8):
+            grid.writeRowRaw(i, pacman_ghost3_bmp[i])
+    	time.sleep(.33)
+
+    	for i in range(0,8):
+            grid.writeRowRaw(i, pacman_ghost4_bmp[i])
+    	time.sleep(.33)
+
+        for i in range(0,8):
+            grid.writeRowRaw(i, pacman_ghost5_bmp[i])
+    	time.sleep(.33)
+
+    	for i in range(0,8):
+            grid.writeRowRaw(i, pacman_ghost6_bmp[i])
+    	time.sleep(.33)
+
+    	for i in range(0,8):
+            grid.writeRowRaw(i, pacman_ghost7_bmp[i])
+    	time.sleep(.33)
+
+     	for i in range(0,8):
+            grid.writeRowRaw(i, monster_face_bmp[i])
+    	time.sleep(.33)
+
+     	for i in range(0,8):
+            grid.writeRowRaw(i, forward_arrow_bmp[i])
+    	time.sleep(.33)
+
+     	for i in range(0,8):
+            grid.writeRowRaw(i, down_arrow_bmp[i])
+    	time.sleep(.33)
+
+        for i in range(0,8):
+            grid.writeRowRaw(i, back_arrow_bmp[i])
+        time.sleep(.33)
+
+     	for i in range(0,8):
+            grid.writeRowRaw(i, up_arrow_bmp[i])
+       	time.sleep(.33)
+
+     	for i in range(0,8):
+            grid.writeRowRaw(i, spin_pattern_3_bmp[i])
+    	time.sleep(.33)
+
+     	for i in range(0,8):
+            grid.writeRowRaw(i, spin_pattern_4_bmp[i])
+    	time.sleep(.33)
+
+     	for i in range(0,8):
+            grid.writeRowRaw(i, spin_pattern_1_bmp[i])
+    	time.sleep(.33)
+
+        for i in range(0,8):
+            grid.writeRowRaw(i, spin_pattern_1_bmp[i])
+    	time.sleep(.33)
+
+        for i in range(0,8):
+       	    grid.writeRowRaw(i, spin_pattern_2_bmp[i])
+    	time.sleep(.33)
+
+    	for i in range(0,8):
+            grid.writeRowRaw(i, spin_pattern_3_bmp[i])
+   	time.sleep(.33)
+
+    	for i in range(0,8):
+            grid.writeRowRaw(i, spin_pattern_4_bmp[i])
+    	time.sleep(.33)
+
